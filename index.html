@@ -8,7 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://unpkg.com/html5-qrcode"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Script Chart.js sudah dihapus agar loading aplikasi jauh lebih cepat -->
   <style>
     body { -webkit-tap-highlight-color: transparent; }
     .nav-active { color: #1d4ed8; border-top: 2px solid #1d4ed8; font-weight: 700; }
@@ -93,38 +93,12 @@
             <span>Rekomendasi otomatis: <b id="suggestText" class="font-mono text-sm tracking-wide">C001-1</b></span>
           </div>
 
-          <!-- Tombol Simpan IN -->
           <button type="submit" id="btnSubmitIn" disabled
             class="w-full bg-slate-300 text-slate-500 cursor-not-allowed font-semibold py-2.5 rounded-lg shadow text-sm transition flex items-center justify-center space-x-2">
             <i class="fa-solid fa-check"></i>
             <span>Simpan Alokasi Unit In</span>
           </button>
         </form>
-      </div>
-
-      <!-- History 5 Frame Terakhir IN -->
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-        <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
-          <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center">
-            <i class="fa-solid fa-clock-rotate-left mr-1.5 text-blue-600"></i> 5 FRAME TERAKHIR (IN)
-          </h3>
-          <span class="text-[10px] text-slate-400">Terbaru di atas</span>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
-            <thead>
-              <tr class="text-slate-400 border-b border-slate-100">
-                <th class="py-1.5 font-medium">No Frame</th>
-                <th class="py-1.5 font-medium text-center">Stall</th>
-                <th class="py-1.5 font-medium">Dispatcher</th>
-                <th class="py-1.5 font-medium text-right">Scantime</th>
-              </tr>
-            </thead>
-            <tbody id="tableRecentIn" class="divide-y divide-slate-100 text-[11px]">
-              <tr><td colspan="4" class="py-3 text-center text-slate-400">Memuat data riwayat...</td></tr>
-            </tbody>
-          </table>
-        </div>
       </div>
     </section>
 
@@ -159,7 +133,6 @@
             </div>
           </div>
 
-          <!-- Tombol Simpan OUT -->
           <button type="submit" id="btnSubmitOut" disabled
             class="w-full bg-slate-300 text-slate-500 cursor-not-allowed font-semibold py-2.5 rounded-lg shadow text-sm transition flex items-center justify-center space-x-2">
             <i class="fa-solid fa-arrow-right-from-bracket"></i>
@@ -167,104 +140,28 @@
           </button>
         </form>
       </div>
-
-      <!-- History 5 Frame Terakhir OUT -->
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-        <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
-          <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center">
-            <i class="fa-solid fa-clock-rotate-left mr-1.5 text-amber-600"></i> 5 FRAME TERAKHIR (OUT)
-          </h3>
-          <span class="text-[10px] text-slate-400">Terbaru di atas</span>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
-            <thead>
-              <tr class="text-slate-400 border-b border-slate-100">
-                <th class="py-1.5 font-medium">No Frame</th>
-                <th class="py-1.5 font-medium text-center">Stall Asal</th>
-                <th class="py-1.5 font-medium">Dispatcher</th>
-                <th class="py-1.5 font-medium text-right">Scantime</th>
-              </tr>
-            </thead>
-            <tbody id="tableRecentOut" class="divide-y divide-slate-100 text-[11px]">
-              <tr><td colspan="4" class="py-3 text-center text-slate-400">Belum ada unit keluar.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 3: ACHIEVEMENT CHARTS -->
-    <section id="viewChart" class="hidden space-y-4">
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-        <h2 class="font-bold text-slate-800 text-xs uppercase tracking-wider mb-2">Filter Periode</h2>
-        <div class="grid grid-cols-2 gap-2 text-xs">
-          <div>
-            <label class="text-slate-500 font-medium">Dari Tanggal:</label>
-            <input type="date" id="filterStart" class="w-full border rounded-lg p-1.5 mt-1 outline-none text-slate-700">
-          </div>
-          <div>
-            <label class="text-slate-500 font-medium">Sampai Tanggal:</label>
-            <input type="date" id="filterEnd" class="w-full border rounded-lg p-1.5 mt-1 outline-none text-slate-700">
-          </div>
-        </div>
-        <button onclick="loadAnalytics()" class="w-full mt-3 bg-slate-900 text-white text-xs font-semibold py-2 rounded-lg shadow active:scale-98 transition">
-          <i class="fa-solid fa-magnifying-glass mr-1"></i> Tampilkan Grafik
-        </button>
-      </div>
-
-      <div class="flex items-center justify-center space-x-6 bg-white p-2.5 rounded-lg border border-slate-200 text-xs font-semibold">
-        <div class="flex items-center space-x-1.5">
-          <span class="w-3.5 h-3.5 rounded bg-[#38bdf8] inline-block shadow-sm"></span>
-          <span class="text-slate-700">Unit In (Biru Muda)</span>
-        </div>
-        <div class="flex items-center space-x-1.5">
-          <span class="w-3.5 h-3.5 rounded bg-[#f87171] inline-block shadow-sm"></span>
-          <span class="text-slate-700">Unit Out (Merah Muda)</span>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-        <h3 class="font-bold text-xs text-slate-700 mb-2">Achievement by Dispatcher</h3>
-        <div class="relative h-60"><canvas id="chartDispatcher"></canvas></div>
-      </div>
-
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
-        <h3 class="font-bold text-xs text-slate-700 mb-2">Achievement by Date</h3>
-        <div class="relative h-60"><canvas id="chartDate"></canvas></div>
-      </div>
     </section>
 
   </main>
 
-  <!-- MODAL SUKSES (AUTO REFRESH HALAMAN) -->
+  <!-- MODAL SUKSES -->
   <div id="modalSuccess" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 transition-opacity">
     <div class="bg-white w-full max-w-sm rounded-2xl p-5 shadow-2xl text-center border border-slate-100">
-      
-      <!-- Nama Aplikasi Kecil -->
       <p class="text-[10px] font-bold text-slate-400 tracking-widest uppercase mb-1">PARKING ALLOCATION</p>
-      
-      <!-- Status Berhasil Besar -->
       <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-inner">
         <i class="fa-solid fa-check"></i>
       </div>
       <h2 id="modalStatusTitle" class="text-2xl font-black text-slate-800 tracking-tight leading-none mb-1">ALOKASI BERHASIL</h2>
       <p id="modalSubTitle" class="text-xs text-slate-500 mb-3">Unit berhasil dicatat ke sistem yard</p>
-
-      <!-- Kotak Lokasi Parkir / Stall -->
       <div class="bg-blue-50/80 border-2 border-blue-500/30 rounded-xl p-3 mb-4">
         <span class="text-[11px] font-semibold text-blue-600 uppercase tracking-wider block">LOKASI STALL UNIT:</span>
         <span id="modalStall" class="text-3xl font-black text-blue-700 font-mono tracking-wider block my-0.5">C001-3</span>
         <span id="modalFrame" class="text-xs text-slate-600 font-mono tracking-wide block">MHKE5EA...</span>
       </div>
-
-      <!-- Reminder K3 SOP -->
       <div class="bg-amber-500 text-white rounded-xl p-2.5 shadow flex items-center justify-center space-x-2">
         <i class="fa-solid fa-triangle-exclamation text-base animate-pulse"></i>
         <span class="text-xs font-black uppercase tracking-wider">Gunakan APD & Patuhi SOP</span>
       </div>
-
-      <!-- Keterangan Auto Refresh -->
       <div class="mt-3 flex items-center justify-center space-x-1.5 text-[11px] text-slate-400">
         <i class="fa-solid fa-rotate fa-spin text-xs"></i>
         <span>Menyimpan data & merefresh otomatis...</span>
@@ -288,19 +185,15 @@
     </div>
   </div>
 
-  <!-- Bottom Navigation -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2 px-6 flex justify-around items-center z-40 shadow-lg">
-    <button onclick="switchTab('in')" id="tabIn" class="flex flex-col items-center text-xs font-medium nav-active">
+  <!-- Bottom Navigation (Disesuaikan jadi 2 menu saja) -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2 flex justify-center z-40 shadow-lg">
+    <button onclick="switchTab('in')" id="tabIn" class="w-1/2 flex flex-col items-center text-xs font-medium nav-active">
       <i class="fa-solid fa-square-parking text-lg mb-1"></i>
       <span>Unit In</span>
     </button>
-    <button onclick="switchTab('out')" id="tabOut" class="flex flex-col items-center text-xs font-medium text-slate-400">
+    <button onclick="switchTab('out')" id="tabOut" class="w-1/2 flex flex-col items-center text-xs font-medium text-slate-400">
       <i class="fa-solid fa-truck-pickup text-lg mb-1"></i>
       <span>Pick Unit</span>
-    </button>
-    <button onclick="switchTab('chart')" id="tabChart" class="flex flex-col items-center text-xs font-medium text-slate-400">
-      <i class="fa-solid fa-chart-line text-lg mb-1"></i>
-      <span>Achievement</span>
     </button>
   </nav>
 
@@ -308,24 +201,19 @@
     // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
     const API_URL = "https://script.google.com/macros/s/AKfycbxxrmXzEwB11cJl0Uvio_okY1nUTtMK044knauCaEIumGJM2xqiTcZRgTwGV1y3zGuNJg/exec";
 
-    let masterData = { areas: [], stalls: [], recentIn: [], recentOut: [], globalRecommended: null };
+    let masterData = { areas: [], stalls: [], globalRecommended: null };
     let html5QrCode = null;
     let activeInputId = null;
     let activeCounterId = null;
     let scanSuccessCallback = null;
-    let chart1 = null;
-    let chart2 = null;
 
     const VIN_REGEX = /^MHKE[A-Z0-9]{13}$/;
 
     window.addEventListener('DOMContentLoaded', () => {
-      // Pulihkan tab terakhir yang aktif sebelum refresh
       const lastTab = sessionStorage.getItem('parking_last_tab') || 'in';
       sessionStorage.removeItem('parking_last_tab');
       switchTab(lastTab);
-
       loadSavedDispatcher();
-      setDefaultDates();
       fetchMasterData();
       validateInForm();
       validateOutForm();
@@ -364,14 +252,12 @@
       }
     }
 
-    // Reset dan Cek Validasi Form IN
     function validateInForm() {
       const disp = document.getElementById('inDispatcher').value.trim();
       const frame = document.getElementById('inNoFrame').value.trim();
       const area = document.getElementById('inArea').value;
       const stall = document.getElementById('inStall').value;
       const btn = document.getElementById('btnSubmitIn');
-
       const isFrameValid = VIN_REGEX.test(frame);
       const isStallValid = stall && !stall.includes("[PENUH]");
 
@@ -384,12 +270,10 @@
       }
     }
 
-    // Reset dan Cek Validasi Form OUT
     function validateOutForm() {
       const disp = document.getElementById('outDispatcher').value.trim();
       const frame = document.getElementById('outNoFrame').value.trim();
       const btn = document.getElementById('btnSubmitOut');
-
       const isFrameValid = VIN_REGEX.test(frame);
 
       if (disp.length > 0 && isFrameValid) {
@@ -402,21 +286,17 @@
     }
 
     function switchTab(tab) {
-      ['viewIn', 'viewOut', 'viewChart'].forEach(id => document.getElementById(id).classList.add('hidden'));
-      ['tabIn', 'tabOut', 'tabChart'].forEach(id => {
-        document.getElementById(id).className = "flex flex-col items-center text-xs font-medium text-slate-400";
+      ['viewIn', 'viewOut'].forEach(id => document.getElementById(id).classList.add('hidden'));
+      ['tabIn', 'tabOut'].forEach(id => {
+        document.getElementById(id).className = "w-1/2 flex flex-col items-center text-xs font-medium text-slate-400";
       });
 
       if (tab === 'in') {
         document.getElementById('viewIn').classList.remove('hidden');
-        document.getElementById('tabIn').className = "flex flex-col items-center text-xs font-medium nav-active";
+        document.getElementById('tabIn').className = "w-1/2 flex flex-col items-center text-xs font-medium nav-active";
       } else if (tab === 'out') {
         document.getElementById('viewOut').classList.remove('hidden');
-        document.getElementById('tabOut').className = "flex flex-col items-center text-xs font-medium nav-active";
-      } else if (tab === 'chart') {
-        document.getElementById('viewChart').classList.remove('hidden');
-        document.getElementById('tabChart').className = "flex flex-col items-center text-xs font-medium nav-active";
-        loadAnalytics();
+        document.getElementById('tabOut').className = "w-1/2 flex flex-col items-center text-xs font-medium nav-active";
       }
     }
 
@@ -427,9 +307,7 @@
           body: JSON.stringify({ action: "getInitialData" })
         });
         const json = await res.json();
-        if (json.success) {
-          applyDataState(json.data);
-        }
+        if (json.success) applyDataState(json.data);
       } catch (e) {
         console.error("Gagal load data master:", e);
       }
@@ -438,7 +316,6 @@
     function applyDataState(data) {
       masterData = data;
       renderAreaDropdown();
-      renderRecentHistory(data.recentIn, data.recentOut);
       validateInForm();
       validateOutForm();
     }
@@ -497,80 +374,32 @@
       validateInForm();
     }
 
-    function renderRecentHistory(recentIn, recentOut) {
-      const tableIn = document.getElementById('tableRecentIn');
-      if (recentIn && recentIn.length > 0) {
-        tableIn.innerHTML = recentIn.map(item => `
-          <tr class="hover:bg-slate-50">
-            <td class="py-2.5 font-bold font-mono text-slate-800">${item.noFrame}</td>
-            <td class="py-2.5 text-center"><span class="bg-blue-100 text-blue-800 font-mono font-bold px-2 py-0.5 rounded text-[11px]">${item.stall}</span></td>
-            <td class="py-2.5 text-slate-600 truncate max-w-[80px]">${item.dispatcher}</td>
-            <td class="py-2.5 text-right text-slate-600 font-mono text-[10px] whitespace-nowrap">${item.scanTime}</td>
-          </tr>
-        `).join('');
-      } else {
-        tableIn.innerHTML = `<tr><td colspan="4" class="py-3 text-center text-slate-400">Belum ada riwayat In.</td></tr>`;
-      }
-
-      const tableOut = document.getElementById('tableRecentOut');
-      if (recentOut && recentOut.length > 0) {
-        tableOut.innerHTML = recentOut.map(item => `
-          <tr class="hover:bg-slate-50">
-            <td class="py-2.5 font-bold font-mono text-slate-800">${item.noFrame}</td>
-            <td class="py-2.5 text-center"><span class="bg-amber-100 text-amber-800 font-mono font-bold px-2 py-0.5 rounded text-[11px]">${item.stall}</span></td>
-            <td class="py-2.5 text-slate-600 truncate max-w-[80px]">${item.dispatcher}</td>
-            <td class="py-2.5 text-right text-slate-600 font-mono text-[10px] whitespace-nowrap">${item.scanTime}</td>
-          </tr>
-        `).join('');
-      } else {
-        tableOut.innerHTML = `<tr><td colspan="4" class="py-3 text-center text-slate-400">Belum ada riwayat Out.</td></tr>`;
-      }
-    }
-
-    // MODAL SUKSES + OTOMATIS REFRESH HALAMAN SETELAH 1.8 DETIK
     function triggerSuccessAndReload(title, sub, stall, frame, activeTab) {
       document.getElementById('modalStatusTitle').innerText = title;
       document.getElementById('modalSubTitle').innerText = sub;
       document.getElementById('modalStall').innerText = stall;
       document.getElementById('modalFrame').innerText = frame;
       document.getElementById('modalSuccess').classList.remove('hidden');
-
       if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-
-      // Catat tab aktif saat ini agar setelah reload langsung membuka tab yang sama
       sessionStorage.setItem('parking_last_tab', activeTab);
-
-      // Refresh total browser setelah 1.8 detik
-      setTimeout(() => {
-        window.location.reload();
-      }, 1800);
+      setTimeout(() => { window.location.reload(); }, 1800);
     }
 
-    // Submit Check In
     async function submitCheckIn(e) {
       e.preventDefault();
       const noFrame = document.getElementById('inNoFrame').value.trim().toUpperCase();
       const stallChosen = document.getElementById('inStall').value;
       const btn = document.getElementById('btnSubmitIn');
-
       btn.disabled = true;
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
-
       const payload = {
         action: "checkIn",
-        data: {
-          dispatcher: document.getElementById('inDispatcher').value,
-          noFrame: noFrame,
-          area: document.getElementById('inArea').value,
-          stall: stallChosen
-        }
+        data: { dispatcher: document.getElementById('inDispatcher').value, noFrame: noFrame, area: document.getElementById('inArea').value, stall: stallChosen }
       };
-
       try {
         const res = await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
         const json = await res.json();
         if (json.success) {
-          // Pulihkan teks tombol agar tidak terlihat berputar
           btn.innerHTML = '<i class="fa-solid fa-check"></i> <span>Simpan Alokasi Unit In</span>';
           triggerSuccessAndReload("ALOKASI BERHASIL", "Unit berhasil diparkirkan di yard", json.data.allocatedStall, json.data.noFrame, 'in');
         } else {
@@ -585,28 +414,20 @@
       }
     }
 
-    // Submit Check Out
     async function submitCheckOut(e) {
       e.preventDefault();
       const noFrame = document.getElementById('outNoFrame').value.trim().toUpperCase();
       const btn = document.getElementById('btnSubmitOut');
-
       btn.disabled = true;
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses Out...';
-
       const payload = {
         action: "checkOut",
-        data: {
-          dispatcher: document.getElementById('outDispatcher').value,
-          noFrame: noFrame
-        }
+        data: { dispatcher: document.getElementById('outDispatcher').value, noFrame: noFrame }
       };
-
       try {
         const res = await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
         const json = await res.json();
         if (json.success) {
-          // Pulihkan teks tombol
           btn.innerHTML = '<i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Konfirmasi Unit Keluar (OUT)</span>';
           triggerSuccessAndReload("PICK UNIT BERHASIL", "Unit berhasil keluar dari yard", json.data.allocatedStall, json.data.noFrame, 'out');
         } else {
@@ -621,13 +442,11 @@
       }
     }
 
-    // QR SCANNER
     function startScanner(inputId, counterId, callback) {
       activeInputId = inputId;
       activeCounterId = counterId;
       scanSuccessCallback = callback;
       document.getElementById('scannerModal').classList.remove('hidden');
-
       html5QrCode = new Html5Qrcode("reader");
       html5QrCode.start(
         { facingMode: "environment" },
@@ -655,87 +474,10 @@
         html5QrCode.stop().then(() => {
           html5QrCode.clear();
           document.getElementById('scannerModal').classList.add('hidden');
-        }).catch(() => {
-          document.getElementById('scannerModal').classList.add('hidden');
-        });
+        }).catch(() => { document.getElementById('scannerModal').classList.add('hidden'); });
       } else {
         document.getElementById('scannerModal').classList.add('hidden');
       }
-    }
-
-    function setDefaultDates() {
-      const today = new Date().toISOString().split('T')[0];
-      const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-      document.getElementById('filterStart').value = weekAgo;
-      document.getElementById('filterEnd').value = today;
-    }
-
-    async function loadAnalytics() {
-      const startDate = document.getElementById('filterStart').value;
-      const endDate = document.getElementById('filterEnd').value;
-
-      try {
-        const res = await fetch(API_URL, {
-          method: "POST",
-          body: JSON.stringify({ action: "getAnalytics", startDate, endDate })
-        });
-        const json = await res.json();
-        if (json.success) renderCharts(json.data);
-      } catch (e) {
-        console.error("Gagal memuat grafik:", e);
-      }
-    }
-
-    function renderCharts(data) {
-      const dispatchers = Object.keys(data.byDispatcher);
-      const dispDataIn = dispatchers.map(d => data.byDispatcher[d].in || 0);
-      const dispDataOut = dispatchers.map(d => data.byDispatcher[d].out || 0);
-
-      const ctx1 = document.getElementById('chartDispatcher').getContext('2d');
-      if (chart1) chart1.destroy();
-      chart1 = new Chart(ctx1, {
-        type: 'bar',
-        data: {
-          labels: dispatchers,
-          datasets: [
-            { label: 'Unit In', data: dispDataIn, backgroundColor: '#38bdf8', borderRadius: 4 },
-            { label: 'Unit Out', data: dispDataOut, backgroundColor: '#f87171', borderRadius: 4 }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { position: 'top' } },
-          scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-        }
-      });
-
-      const dates = Object.keys(data.byDate).sort();
-      const dateLabels = dates.map(d => {
-        const parts = d.split('-');
-        return `${parts[2]}/${parts[1]}`;
-      });
-      const dateDataIn = dates.map(d => data.byDate[d].in || 0);
-      const dateDataOut = dates.map(d => data.byDate[d].out || 0);
-
-      const ctx2 = document.getElementById('chartDate').getContext('2d');
-      if (chart2) chart2.destroy();
-      chart2 = new Chart(ctx2, {
-        type: 'bar',
-        data: {
-          labels: dateLabels,
-          datasets: [
-            { label: 'Unit In', data: dateDataIn, backgroundColor: '#38bdf8', borderRadius: 4 },
-            { label: 'Unit Out', data: dateDataOut, backgroundColor: '#f87171', borderRadius: 4 }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { position: 'top' } },
-          scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-        }
-      });
     }
   </script>
 </body>
